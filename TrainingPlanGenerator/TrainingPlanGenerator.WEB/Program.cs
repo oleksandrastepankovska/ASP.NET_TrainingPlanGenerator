@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TrainingPlanGenerator.Core.Interfaces;
 using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
@@ -6,6 +7,13 @@ using TrainingPlanGenerator.Infrastructure.Data;
 using TrainingPlanGenerator.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var mapperConfig = new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile(new MappingProfile());
+    });
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext(connectionString);

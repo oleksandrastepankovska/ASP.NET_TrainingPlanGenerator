@@ -24,6 +24,8 @@ namespace TrainingPlanGenerator.Web
                 trainingPlan.AddExcersise(new Excersise() { Title = "Push/Pull/Legs" });
 
                 dbContext.TrainingPlans.Add(trainingPlan);
+
+                dbContext.SaveChanges();
             }
         }
     }
