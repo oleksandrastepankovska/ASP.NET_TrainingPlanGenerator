@@ -8,25 +8,12 @@ namespace TrainingPlanGenerator.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IRepository<Excersise> _excersiseRepository; 
-
-        public HomeController(ILogger<HomeController> logger, IRepository<Excersise> excersiseRepository)
+        public HomeController()
         {
-            _logger = logger;
-            _excersiseRepository = excersiseRepository;
         }
 
         public IActionResult Index()
         {
-            var excersise = new Excersise() {
-                Title = "Abdominal Crunch"
-            };
-            _excersiseRepository.Create(excersise);
-            _excersiseRepository.SaveChanges();
-
-            var dbExcersises = _excersiseRepository.Get(x => true);
-
             return View();
         }
 
