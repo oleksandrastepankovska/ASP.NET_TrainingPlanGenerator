@@ -1,4 +1,4 @@
-namespace TrainingPlanGenerator.WEB.Models
+namespace TrainingPlanGenerator.Web.ViewModels
 {
     public class ErrorViewModel
     {
