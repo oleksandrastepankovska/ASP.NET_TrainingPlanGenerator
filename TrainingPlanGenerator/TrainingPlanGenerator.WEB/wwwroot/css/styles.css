@@ -1,0 +1,66 @@
+.training-list > div {
+}
+
+.training-list .container, .training-header {
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-image: url("/image1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+h1 {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    line-height: 150px;
+}
+.expanded-list {
+    margin-bottom: 3rem;
+}
+
+.training-header {
+    cursor: auto;
+}
+
+.card-header a.btn {
+    width: 100%;
+    text-align: start;
+}
+.card-header a.btn:focus {
+    box-shadow: none;
+}
+.card-header {
+    border: none;
+    border-radius: 0;
+}
+.card {
+    border: 1px solid #d8d8d8;
+    border-radius: 0;
+}
+.card:not(:last-child) {
+    border-bottom: 0;
+}
+
+.start-training {
+    position: fixed;
+    border-radius: 50%;
+    background-color: white;
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border: 5px solid #37583f;
+    right: 10px;
+    bottom: 10px;
+}
+.start-training img {
+    position: absolute;
+    transform: rotate(-90deg);
+    height: 100%;
+    width: 100%;
+    right: -3px
+}
