@@ -24,7 +24,7 @@ namespace TrainingPlanGenerator.Web.Controllers
         [HttpGet("trainingplan")]
         public async Task<IActionResult> PlanOverview(int id)
         {
-            var trainingPlan = await _trainingPlanRepository.GetSingleAsync(x => x.Id == id);
+            var trainingPlan = await _trainingPlanRepository.GetSingleAsync(x => x.Id == id, x => x.Excersises);
             var trainingPlanViewModel = _mapper.Map<TrainingPlanViewModel>(trainingPlan);
             return View(trainingPlanViewModel);
         }
