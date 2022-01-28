@@ -1,14 +1,13 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TrainingPlanGenerator.Core.Interfaces;
 using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
 using TrainingPlanGenerator.Infrastructure;
 using TrainingPlanGenerator.Infrastructure.Data;
 using TrainingPlanGenerator.Web;
-using Microsoft.AspNetCore.Identity;
 using TrainingPlanGenerator.Web.ViewModels.Validators;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddControllersWithViews()
     .AddRazorRuntimeCompilation()
-    .AddFluentValidation(fvconfig => {
+    .AddFluentValidation(fvconfig =>
+    {
         fvconfig.RegisterValidatorsFromAssemblyContaining<RegistrationFormValidator>(lifetime: ServiceLifetime.Scoped);
         fvconfig.AutomaticValidationEnabled = false;
     });
