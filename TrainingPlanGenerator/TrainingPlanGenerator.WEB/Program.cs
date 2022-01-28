@@ -5,6 +5,7 @@ using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
 using TrainingPlanGenerator.Infrastructure;
 using TrainingPlanGenerator.Infrastructure.Data;
 using TrainingPlanGenerator.Web;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,10 @@ builder.Services.AddDbContext(connectionString);
 
 builder.Services.AddScoped<IRepository<Excersise>, Repository<Excersise>>();
 builder.Services.AddScoped<IRepository<TrainingPlan>, Repository<TrainingPlan>>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -39,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -55,7 +61,7 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<AppDbContext>();
         context.Database.Migrate();
         context.Database.EnsureCreated();
-        SeedData.Initialize(services);
+        await SeedData.Initialize(services);
     }
     catch (Exception ex)
     {

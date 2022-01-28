@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
 using TrainingPlanGenerator.Infrastructure.Data.Config;
 
@@ -6,7 +7,7 @@ namespace TrainingPlanGenerator.Infrastructure.Data
 {
     //dotnet ef migrations add InitialCreate --project TrainingPlanGenerator.Infrastructure --startup-project TrainingPlanGenerator.Web --output-dir Data\Migrations
     //dotnet ef database update --project TrainingPlanGenerator.Infrastructure --startup-project TrainingPlanGenerator.Web
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public AppDbContext(DbContextOptions options) : base(options) { }
 

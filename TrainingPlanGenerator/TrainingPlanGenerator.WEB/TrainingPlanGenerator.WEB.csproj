@@ -7,15 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authotization\**" />
     <Compile Remove="MappingProfiles\**" />
     <Compile Remove="Models\**" />
     <Compile Remove="Views\Home\**" />
+    <Content Remove="Authotization\**" />
     <Content Remove="MappingProfiles\**" />
     <Content Remove="Models\**" />
     <Content Remove="Views\Home\**" />
+    <EmbeddedResource Remove="Authotization\**" />
     <EmbeddedResource Remove="MappingProfiles\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Views\Home\**" />
+    <None Remove="Authotization\**" />
     <None Remove="MappingProfiles\**" />
     <None Remove="Models\**" />
     <None Remove="Views\Home\**" />
@@ -27,6 +31,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

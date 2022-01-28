@@ -6,7 +6,7 @@ using TrainingPlanGenerator.Web.ViewModels;
 
 namespace TrainingPlanGenerator.Web.Controllers
 {
-    //[Route("TrainingPlan")]
+    [Route("trainingplan")]
     public class TrainingPlanController : Controller
     {
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace TrainingPlanGenerator.Web.Controllers
             _trainingPlanRepository = trainingPlanRepository;
         }
 
-        [HttpGet("trainingplan")]
+        [HttpGet]
         public async Task<IActionResult> PlanOverview(int id)
         {
             var trainingPlan = await _trainingPlanRepository.GetSingleAsync(x => x.Id == id, x => x.Excersises);
