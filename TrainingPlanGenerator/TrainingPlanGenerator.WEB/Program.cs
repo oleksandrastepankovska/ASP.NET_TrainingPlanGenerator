@@ -6,8 +6,20 @@ using TrainingPlanGenerator.Infrastructure;
 using TrainingPlanGenerator.Infrastructure.Data;
 using TrainingPlanGenerator.Web;
 using Microsoft.AspNetCore.Identity;
+using TrainingPlanGenerator.Web.ViewModels.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation()
+    .AddFluentValidation(fvconfig => {
+        fvconfig.RegisterValidatorsFromAssemblyContaining<RegistrationFormValidator>(lifetime: ServiceLifetime.Scoped);
+        fvconfig.AutomaticValidationEnabled = false;
+    });
 
 var mapperConfig = new MapperConfiguration(cfg =>
     {
@@ -21,13 +33,11 @@ builder.Services.AddDbContext(connectionString);
 
 builder.Services.AddScoped<IRepository<Excersise>, Repository<Excersise>>();
 builder.Services.AddScoped<IRepository<TrainingPlan>, Repository<TrainingPlan>>();
+builder.Services.AddScoped<IRepository<AppUser>, Repository<AppUser>>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
-
-// Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
@@ -67,6 +77,7 @@ using (var scope = app.Services.CreateScope())
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred seeding the DB.");
+        throw ex;
     }
 }
 
