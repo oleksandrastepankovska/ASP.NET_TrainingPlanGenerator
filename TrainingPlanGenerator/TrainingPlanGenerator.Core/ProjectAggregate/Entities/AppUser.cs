@@ -8,7 +8,7 @@ namespace TrainingPlanGenerator.Core.ProjectAggregate.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? RegistrationDate { get; set; }
-        public TrainingPlan ActiveTrainingPlan { get; set; }
+        public TrainingPlan? ActiveTrainingPlan { get; set; }
 
         public void AttachIdentityUser(IdentityUser identityUser)
         {

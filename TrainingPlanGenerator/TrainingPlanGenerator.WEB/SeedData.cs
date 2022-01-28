@@ -25,9 +25,9 @@ namespace TrainingPlanGenerator.Web
                 Title = "Beginner's Workout",
                 Description = "Whether you're just starting out―or starting again―this fast-track workout plan will help you drastically improve your physique and fitness levels."
             };
-            trainingPlan.AddExcersise(new Excersise() { Title = "Full-body" });
-            trainingPlan.AddExcersise(new Excersise() { Title = "Upper body/Lower body" });
-            trainingPlan.AddExcersise(new Excersise() { Title = "Push/Pull/Legs" });
+            trainingPlan.AddExcersise(new Excersise() { Title = "Full-body", Description = String.Empty });
+            trainingPlan.AddExcersise(new Excersise() { Title = "Upper body/Lower body", Description = String.Empty });
+            trainingPlan.AddExcersise(new Excersise() { Title = "Push/Pull/Legs", Description = String.Empty });
 
             if (!dbContext.TrainingPlans.Any())
             {
