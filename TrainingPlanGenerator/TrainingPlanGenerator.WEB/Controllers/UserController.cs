@@ -38,11 +38,13 @@ namespace TrainingPlanGenerator.Web.Controllers
         }
 
         [HttpGet("signin")]
-        public async Task<string> SignIn()
+        public async Task<IActionResult> SignIn()
         {
             var signIn = await _signInManager.PasswordSignInAsync("example@mail.com", "_1Qw23Er45T_", false, false);
 
-            return $"{signIn.Succeeded}";
+            var action = nameof(UserController.Profile);
+            var controller = nameof(UserController).Replace(nameof(Controller), "");
+            return RedirectToAction(action, controller);
         }
 
         [HttpGet("register")]
