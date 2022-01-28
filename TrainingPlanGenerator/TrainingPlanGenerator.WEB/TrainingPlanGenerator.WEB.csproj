@@ -8,25 +8,38 @@
 
   <ItemGroup>
     <Compile Remove="Authotization\**" />
+    <Compile Remove="Filters\**" />
     <Compile Remove="MappingProfiles\**" />
     <Compile Remove="Models\**" />
+    <Compile Remove="wwwroot\js\**" />
     <Content Remove="Authotization\**" />
+    <Content Remove="Filters\**" />
     <Content Remove="MappingProfiles\**" />
     <Content Remove="Models\**" />
+    <Content Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="Authotization\**" />
+    <EmbeddedResource Remove="Filters\**" />
     <EmbeddedResource Remove="MappingProfiles\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
     <None Remove="Authotization\**" />
+    <None Remove="Filters\**" />
     <None Remove="MappingProfiles\**" />
     <None Remove="Models\**" />
+    <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\site.js" />
+    <Compile Remove="ViewModels\ErrorViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\Error.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.1" />
@@ -43,10 +56,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainingPlanGenerator.Infrastructure\TrainingPlanGenerator.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

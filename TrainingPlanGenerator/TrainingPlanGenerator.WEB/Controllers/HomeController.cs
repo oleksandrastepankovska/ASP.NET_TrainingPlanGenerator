@@ -34,19 +34,5 @@ namespace TrainingPlanGenerator.Web.Controllers
 
             return View(pageViewModel);
         }
-
-        [HttpGet("SignIn")]
-        public async Task<string> SignIn()
-        {
-            var signIn = await _signInManager.PasswordSignInAsync("example@mail.com", "_1Qw23Er45T_", false, false);
-
-            return $"{signIn.Succeeded}";
-        }
-
-        [Authorize(Roles = Constants.UsersRole)]
-        public async Task<string> AuthAcces()
-        {
-            return "Success";
-        }
     }
 }

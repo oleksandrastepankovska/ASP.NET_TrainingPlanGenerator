@@ -13,6 +13,7 @@ namespace TrainingPlanGenerator.Infrastructure.Data
 
         public DbSet<Excersise> Excersises => Set<Excersise>();
         public DbSet<TrainingPlan> TrainingPlans => Set<TrainingPlan>();
+        public DbSet<AppUser> AppUsers => Set<AppUser>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
