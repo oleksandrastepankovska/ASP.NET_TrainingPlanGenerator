@@ -8,22 +8,18 @@
 
   <ItemGroup>
     <Compile Remove="Authotization\**" />
-    <Compile Remove="Filters\**" />
     <Compile Remove="MappingProfiles\**" />
     <Compile Remove="Models\**" />
     <Compile Remove="wwwroot\js\**" />
     <Content Remove="Authotization\**" />
-    <Content Remove="Filters\**" />
     <Content Remove="MappingProfiles\**" />
     <Content Remove="Models\**" />
     <Content Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="Authotization\**" />
-    <EmbeddedResource Remove="Filters\**" />
     <EmbeddedResource Remove="MappingProfiles\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
     <None Remove="Authotization\**" />
-    <None Remove="Filters\**" />
     <None Remove="MappingProfiles\**" />
     <None Remove="Models\**" />
     <None Remove="wwwroot\js\**" />

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPlanGenerator.Core.Interfaces;
@@ -12,24 +11,36 @@ namespace TrainingPlanGenerator.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IRepository<TrainingPlan> _trainingPlanRepository;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IRepository<AppUser> _userRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public HomeController(
             IMapper mapper,
             IRepository<TrainingPlan> trainingPlanRepository,
-            SignInManager<IdentityUser> signInManager)
+            IRepository<AppUser> userRepository,
+            UserManager<IdentityUser> userManager)
         {
 
             _mapper = mapper;
             _trainingPlanRepository = trainingPlanRepository;
-            _signInManager = signInManager;
+            _userRepository = userRepository;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Index()
         {
+            var pageViewModel = new HomePageViewModel();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var idenityUser = await _userManager.GetUserAsync(User);
+                var user = await _userRepository.GetSingleAsync(x => string.Equals(idenityUser.Id, x.IdentityUserId));
+
+                pageViewModel.User = _mapper.Map<UserViewModel>(user);
+            }
+
             var trainingPlansList = await _trainingPlanRepository.GetAsync(x => true);
 
-            var pageViewModel = new HomePageViewModel();
             pageViewModel.TrainingPlans = _mapper.Map<IEnumerable<TrainingPlanViewModel>>(trainingPlansList).ToList();
 
             return View(pageViewModel);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPlanGenerator.Core.Interfaces;
 using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
+using TrainingPlanGenerator.Web.Filters;
 using TrainingPlanGenerator.Web.ViewModels;
 using TrainingPlanGenerator.Web.ViewModels.Validators;
 
@@ -40,12 +41,14 @@ namespace TrainingPlanGenerator.Web.Controllers
             _signInManager = signInManager;
         }
 
+        [AllowAnonymousOnly]
         [HttpGet("signin")]
         public async Task<IActionResult> SignIn()
-        {
+        {   
             return View(new SignInPageViewModel());
         }
 
+        [AllowAnonymousOnly]
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(SignInFormViewModel model)
         {
@@ -62,7 +65,7 @@ namespace TrainingPlanGenerator.Web.Controllers
             {
                 return RedirectToAction(
                     nameof(UserController.Profile),
-                    nameof(UserController).Replace(nameof(Controller), "")
+                    nameof(UserController).Replace(nameof(Controller), string.Empty)
                     );
             }
 
@@ -70,12 +73,26 @@ namespace TrainingPlanGenerator.Web.Controllers
             return View(new SignInPageViewModel() { SignInForm = model });
         }
 
+        [Authorize(Roles = $"{Constants.UsersRole},{Constants.AdministratorsRole}")]
+        [HttpGet("signout")]
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction(
+                nameof(HomeController.Index),
+                nameof(HomeController).Replace(nameof(Controller), string.Empty)
+                );
+        }
+
+        [AllowAnonymousOnly]
         [HttpGet("register")]
         public async Task<IActionResult> Register()
         {
             return View(new RegisterPageViewModel());
         }
 
+        [AllowAnonymousOnly]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegistrationFormViewModel model)
         {
