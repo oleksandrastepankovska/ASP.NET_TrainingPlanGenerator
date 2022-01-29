@@ -1,10 +1,12 @@
 ﻿@model HomePageViewModel
 
-<div class="container mt-5 training-list">
-	@foreach (var trainingPlan in Model.TrainingPlans)
-	{
-		<div class="container h-50 p-5 my-5" onclick=@($"window.location.href='/trainingplan?id={trainingPlan.Id}'")>
-			<h1>@trainingPlan.Title</h1>
-		</div>
-	}
-</div>
+<main role="main" class="pb-3">
+	<div class="container mt-5 training-list">
+		@foreach (var trainingPlan in Model.TrainingPlans)
+		{
+			<div class="container h-50 p-5 my-5" onclick=@($"window.location.href='/trainingplan?id={trainingPlan.Id}'")>
+				<h1>@trainingPlan.Title</h1>
+			</div>
+		}
+	</div>
+</main>
