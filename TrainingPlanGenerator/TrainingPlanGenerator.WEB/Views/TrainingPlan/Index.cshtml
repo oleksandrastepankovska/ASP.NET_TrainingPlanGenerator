@@ -1,0 +1,35 @@
+﻿@model TrainingPlanPageViewModel
+
+<main role="main" class="pb-3">
+	<div class="container mt-5">
+		<div class="training-header">
+			<h1>@Model.TrainingPlan.Title</h1>
+		</div>
+
+		<div class="container mt-5">
+			<p class="description"> @Model.TrainingPlan.Description </p>
+		</div>
+
+		<div class="container expanded-list mt-5">
+			@foreach (var excersise in Model.TrainingPlan.Excersises)
+			{
+				var id = $"collapse{excersise.Id}";
+				<div class="card">
+					<div class="card-header">
+						<a class="btn" data-bs-toggle="collapse" href="#@id">
+							@excersise.Title
+						</a>
+					</div>
+					<div id="@id" class="collapse">
+						<div class="card-body">
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
+		@*<div class="start-training">
+			<img src="Arrow-down.svg" alt="">
+		</div>*@
+	</div>
+</main>

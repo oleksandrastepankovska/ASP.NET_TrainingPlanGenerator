@@ -1,7 +1,43 @@
+using AutoMapper;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using TrainingPlanGenerator.Core.Interfaces;
+using TrainingPlanGenerator.Core.ProjectAggregate.Entities;
+using TrainingPlanGenerator.Infrastructure;
+using TrainingPlanGenerator.Infrastructure.Data;
+using TrainingPlanGenerator.Web;
+using TrainingPlanGenerator.Web.ViewModels.Validators;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation()
+    .AddFluentValidation(fvconfig =>
+    {
+        fvconfig.RegisterValidatorsFromAssemblyContaining<RegistrationFormValidator>(lifetime: ServiceLifetime.Scoped);
+        fvconfig.AutomaticValidationEnabled = false;
+    });
+
+var mapperConfig = new MapperConfiguration(cfg =>
+    {
+        cfg.AddProfile(new MappingProfile());
+    });
+var mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext(connectionString);
+
+builder.Services.AddScoped<IRepository<Excersise>, Repository<Excersise>>();
+builder.Services.AddScoped<IRepository<TrainingPlan>, Repository<TrainingPlan>>();
+builder.Services.AddScoped<IRepository<AppUser>, Repository<AppUser>>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
@@ -18,10 +54,31 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        context.Database.Migrate();
+        context.Database.EnsureCreated();
+        await SeedData.Initialize(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+        throw ex;
+    }
+}
 
 app.Run();

@@ -7,29 +7,30 @@ using TrainingPlanGenerator.Web.ViewModels;
 
 namespace TrainingPlanGenerator.Web.Controllers
 {
-    public class HomeController : Controller
+    public class TrainingPlanController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IRepository<TrainingPlan> _trainingPlanRepository;
         private readonly IRepository<AppUser> _userRepository;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(
+        public TrainingPlanController(
             IMapper mapper,
             IRepository<TrainingPlan> trainingPlanRepository,
             IRepository<AppUser> userRepository,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager
+            )
         {
-
             _mapper = mapper;
             _trainingPlanRepository = trainingPlanRepository;
             _userRepository = userRepository;
             _userManager = userManager;
         }
 
-        public async Task<ActionResult> Index()
+        [HttpGet("trainingplan")]
+        public async Task<IActionResult> Index(int id)
         {
-            var pageViewModel = new HomePageViewModel();
+            var pageViewModel = new TrainingPlanPageViewModel();
 
             if (User.Identity.IsAuthenticated)
             {
@@ -39,9 +40,8 @@ namespace TrainingPlanGenerator.Web.Controllers
                 pageViewModel.User = _mapper.Map<UserViewModel>(user);
             }
 
-            var trainingPlansList = await _trainingPlanRepository.GetAsync(x => true);
-
-            pageViewModel.TrainingPlans = _mapper.Map<IEnumerable<TrainingPlanViewModel>>(trainingPlansList).ToList();
+            var trainingPlan = await _trainingPlanRepository.GetSingleAsync(x => x.Id == id, x => x.Excersises);
+            pageViewModel.TrainingPlan = _mapper.Map<TrainingPlanViewModel>(trainingPlan);
 
             return View(pageViewModel);
         }
